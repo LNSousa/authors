@@ -3,7 +3,7 @@ const Author = require('../models/authors.model')
 module.exports.createAuthor = (req, res) => {
     Author.create(req.body)
     .then((newAuthor) => res.json({results: newAuthor}))
-    .catch((err) => res.json(err))
+    .catch(err => res.status(400).json(err))
 }
 
 module.exports.allAuthors = (req, res) => {
@@ -19,9 +19,9 @@ module.exports.getAuthor = (req, res) => {
 }
 
 module.exports.updateAuthor = (req, res) => {
-    Author.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+    Author.findOneAndUpdate({_id: req.params.id}, req.body, { runValidators: true }, { new: true})
     .then((updatedAuthor) => res.json({results: updatedAuthor}))
-    .catch((err) => res.json(err))
+    .catch(err => res.status(400).json(err))
 }
 
 module.exports.deleteAuthor = (req, res) => {

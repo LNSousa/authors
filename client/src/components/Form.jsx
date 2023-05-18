@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 const Form = (props) => {
-    const {initialName, onSubmitProp} = props
+    const {initialName, onSubmitProp, errors} = props
     const [name, setName] = useState(initialName)
 
     // console.log(name)
@@ -16,6 +16,9 @@ const Form = (props) => {
         <div>
             <a href="/" className='btn btn-primary'>Home</a>
             <div>
+        {
+            errors.map((err, idx) => <p key={idx} style={{color: 'red'}}>{err}</p>)
+        }
                 <form onSubmit={submitHandler}>
                     <label className='my-3 me-1'>Name:</label>
                     <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)}/><br/>

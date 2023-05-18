@@ -8,6 +8,7 @@ const Update = (props) => {
     const {id} = useParams()
     const [author, setAuthor] = useState()
     const [loaded, setLoaded] = useState(false)
+    const [errors, setErr] = useState([])
 
     const navigate = useNavigate()
 
@@ -24,6 +25,14 @@ const Update = (props) => {
             .then(res => {
                 navigate('/')
             })
+            .catch((err) => {
+                const errorResponse = err.response.data.errors;
+                const errArr = []
+                for (const key of Object.keys(errorResponse)) {
+                    errArr.push(errorResponse[key].message)
+                }
+                setErr(errArr)
+            })
     }
 
     return (
@@ -32,6 +41,7 @@ const Update = (props) => {
                 <Form  
                     onSubmitProp={updateAuthor}
                     initialName={author.name}
+                    errors={errors}
                 />
             )}
         </div>
